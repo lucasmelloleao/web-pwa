@@ -5,8 +5,14 @@ import pwaLogo from '/pwa-192x192.png'
 function App() {
   const [count, setCount] = useState(0)
   const [showPortal, setShowPortal] = useState(false)
+  const [isShaking, setIsShaking] = useState(false)
 
   useEffect(() => {
+    if (count === 3 || count === 5 || count === 7) {
+      setIsShaking(true)
+      setTimeout(() => setIsShaking(false), 200)
+    }
+
     if (count === 3) {
       if ('vibrate' in navigator) {
         navigator.vibrate(200)
@@ -58,7 +64,7 @@ function App() {
           </p>
           <div className="hero-actions">
             <button
-              className="btn-primary"
+              className={`btn-primary ${isShaking ? 'shake-animation' : ''}`}
               onClick={() => setCount((c) => c + 1)}
             >
               Interactive Counter: {count}
