@@ -24,15 +24,15 @@ function App() {
             <button className="btn-close" onClick={() => setShowPortal(false)}>✕ Fechar</button>
             <span>Portal Coamo</span>
           </div>
-          <iframe 
-            src="https://web-portal-comunicacao-coorporativa.stg.coamo.com.br/login" 
+          <iframe
+            src="https://web-portal-comunicacao-coorporativa.prd.coamo.com.br/login"
             title="Portal Coamo"
             className="portal-iframe"
           />
         </div>
       )}
       <div className="gradient-bg"></div>
-      
+
       <nav>
         <div className="logo">
           <img src={pwaLogo} alt="PWA Logo" />
@@ -52,8 +52,8 @@ function App() {
             Experience the power of modern web technologies. Fast, reliable, and installable on any device.
           </p>
           <div className="hero-actions">
-            <button 
-              className="btn-primary" 
+            <button
+              className="btn-primary"
               onClick={() => setCount((c) => c + 1)}
             >
               Interactive Counter: {count}
@@ -67,7 +67,7 @@ function App() {
             <h3>Ultra Fast</h3>
             <p>Optimized with Vite 8 for the best developer and user experience possible.</p>
           </div>
-          
+
           <div className="glass-card feature-card">
             <div className="feature-icon">📱</div>
             <h3>PWA Ready</h3>
@@ -80,17 +80,17 @@ function App() {
             <p>Crafted with modern aesthetics, glassmorphism, and smooth animations.</p>
           </div>
         </section>
-        
+
         <div style={{ textAlign: 'center', padding: '4rem 2rem' }}>
-          <img 
-            src={heroImg} 
-            alt="Hero Background" 
-            style={{ 
-              maxWidth: '100%', 
-              borderRadius: '32px', 
+          <img
+            src={heroImg}
+            alt="Hero Background"
+            style={{
+              maxWidth: '100%',
+              borderRadius: '32px',
               boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
               border: '1px solid rgba(255,255,255,0.1)'
-            }} 
+            }}
           />
         </div>
       </main>
