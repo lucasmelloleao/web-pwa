@@ -10,6 +10,9 @@ function App() {
       const audio = new Audio('/success.mp3')
       audio.play().catch(error => console.error("Error playing sound:", error))
     }
+    if (count === 7) {
+      window.location.href = 'https://web-portal-comunicacao-coorporativa.stg.coamo.com.br/login'
+    }
   }, [count])
 
   return (
