@@ -7,6 +7,11 @@ function App() {
   const [showPortal, setShowPortal] = useState(false)
 
   useEffect(() => {
+    if (count === 3) {
+      if ('vibrate' in navigator) {
+        navigator.vibrate(200)
+      }
+    }
     if (count === 5) {
       const audio = new Audio('/success.mp3')
       audio.play().catch(error => console.error("Error playing sound:", error))
