@@ -4,6 +4,7 @@ import pwaLogo from '/pwa-192x192.png'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [showPortal, setShowPortal] = useState(false)
 
   useEffect(() => {
     if (count === 5) {
@@ -11,12 +12,25 @@ function App() {
       audio.play().catch(error => console.error("Error playing sound:", error))
     }
     if (count === 7) {
-      window.location.href = 'https://web-portal-comunicacao-coorporativa.stg.coamo.com.br/login'
+      setShowPortal(true)
     }
   }, [count])
 
   return (
     <>
+      {showPortal && (
+        <div className="portal-overlay">
+          <div className="portal-header">
+            <button className="btn-close" onClick={() => setShowPortal(false)}>✕ Fechar</button>
+            <span>Portal Coamo</span>
+          </div>
+          <iframe 
+            src="https://web-portal-comunicacao-coorporativa.stg.coamo.com.br/login" 
+            title="Portal Coamo"
+            className="portal-iframe"
+          />
+        </div>
+      )}
       <div className="gradient-bg"></div>
       
       <nav>
