@@ -3,6 +3,12 @@ import heroImg from './assets/hero.png'
 import pwaLogo from '/pwa-192x192.png'
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [usernameOrEmail, setUsernameOrEmail] = useState('lleao')
+  const [password, setPassword] = useState('senha')
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
+
   const [count, setCount] = useState(0)
   const [showPortal, setShowPortal] = useState(false)
   const [isShaking, setIsShaking] = useState(false)
@@ -27,6 +33,85 @@ function App() {
     }
   }, [count])
 
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const response = await fetch('https://api-comunicacao-coorporativa.prd.coamo.com.br/v1/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ usernameOrEmail, password }),
+      })
+
+      if (response.ok) {
+        setIsLoggedIn(true)
+      } else {
+        const data = await response.json().catch(() => ({}))
+        setError(data.message || 'Erro ao realizar login. Verifique suas credenciais.')
+      }
+    } catch (err) {
+      setError('Erro de conexão. Verifique se o servidor está acessível.')
+      console.error('Login error:', err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <>
+        <div className="gradient-bg"></div>
+        <div className="login-container">
+          <div className="glass-card login-card">
+            <div className="logo" style={{ justifyContent: 'center', marginBottom: '2rem' }}>
+              <img src={pwaLogo} alt="PWA Logo" />
+              <span>ModernPWA</span>
+            </div>
+            <h2 className="text-gradient">Bem-vindo</h2>
+            
+            {error && <div className="error-message">{error}</div>}
+            
+            <form onSubmit={handleLogin}>
+              <div className="form-group">
+                <label>Usuário ou Email</label>
+                <input 
+                  type="text" 
+                  className="input-field"
+                  value={usernameOrEmail}
+                  onChange={(e) => setUsernameOrEmail(e.target.value)}
+                  placeholder="Seu usuário"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Senha</label>
+                <input 
+                  type="password" 
+                  className="input-field"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Sua senha"
+                  required
+                />
+              </div>
+              <button 
+                type="submit" 
+                className="btn-primary login-btn"
+                disabled={isLoading}
+              >
+                {isLoading ? 'Autenticando...' : 'Entrar'}
+              </button>
+            </form>
+          </div>
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
       {showPortal && (
@@ -50,17 +135,17 @@ function App() {
           <span>ModernPWA</span>
         </div>
         <div className="nav-links">
-          <a href="#" className="btn-primary">Get Started</a>
+          <button onClick={() => setIsLoggedIn(false)} className="btn-primary" style={{ background: 'transparent', border: '1px solid var(--glass-border)' }}>Sair</button>
         </div>
       </nav>
 
       <main>
         <section className="hero-section">
           <h1 className="hero-title text-gradient">
-            Build Future-Ready <br /> Progressive Apps
+            Dashboard <br /> Logado com Sucesso
           </h1>
           <p className="hero-subtitle">
-            Experience the power of modern web technologies. Fast, reliable, and installable on any device.
+            Você está autenticado. Explore as funcionalidades do seu Progressive Web App.
           </p>
           <div className="hero-actions">
             <button
@@ -76,7 +161,7 @@ function App() {
           <div className="glass-card feature-card">
             <div className="feature-icon">🚀</div>
             <h3>Ultra Fast</h3>
-            <p>Optimized with Vite 8 for the best developer and user experience possible.</p>
+            <p>Optimized with Vite 6 for the best developer and user experience possible.</p>
           </div>
 
           <div className="glass-card feature-card">
